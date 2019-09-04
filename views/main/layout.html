@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Echo's blog</title>
+    <link href="/public/css/main.css" rel="stylesheet" type="text/css">
+    <link href="/public/css/nightSky.css" rel="stylesheet" type="text/css">
+    <link href="/public/fontAwesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="/public/js/jquery-1.12.4.min.js"></script>
+    <script src="/public/js/index.js"></script>
+</head>
+
+<body>
+<div id='sky-night'>
+    <div class="load-view" style="display: none;">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <section class="bg">
+        <div class="bg__house"></div>
+        <div class="bg__sky"></div>
+    </section>
+    <section class="main-visual">
+        <div class="main-visual__inner">
+            <img src="../../public/images/moon.png" class="main-visual__logo">
+            <div class="main-visual__theme">Echo's blog</div>
+        </div>
+    </section>
+    <section class="description">
+        <div class="description__inner">
+            {% if userInfo._id %}
+            <div class="login-top">
+                {% if userInfo.isAdmin %}
+                <p style="display: inline;">
+                    <span class="welcome">你好，管理员！</span>
+                    <a href="/admin" class="gotoAdmin">进入管理</a>
+                </p>
+                {%else%}
+                <span class="welcome">Hello,{{userInfo.username}}!</span><span class="welcome-after"> *^__^* </span>
+                {%endif%}
+                <span class="logout-top" id="logout">退出登录</span>
+            </div>
+            {%else%}
+            <div class="login-top"><span class="log">登录</span><span class="res">注册</span></div>
+            {%endif%}            
+            <div class="mark"></div>
+            <div class="leftBox left-log" id="loginBox">
+                <div class="title"><span>登录</span></div>
+                <img class="closeImg" src="../../public/images/close.png">
+                <div class="line"><span class="colDark" >用户名：</span><input name="username" type="text"/><em></em></div>
+                <div class="line"><span class="colDark">密码：</span><input name="password" type="password" /><em></em></div>
+                <div class="line"><button>登 录</button></div>
+                <p class="textRight">还没注册？<a href="javascript:;" class="colMint">马上注册</a></p>
+                <p class="colWarning textCenter"></p>
+            </div>
+            <div class="leftBox left-res" id="registerBox" style="display: none;">
+                <img class="closeImg" src="../../public/images/close.png">
+                <div class="title"><span>注册</span></div>
+                <div class="line"><span class="colDark">用户名：</span><input name="username" type="text" /></div>
+                <div class="line"><span class="colDark">密码：</span><input name="password" type="password" /></div>
+                <div class="line"><span class="colDark">确认：</span><input name="repassword" type="password" /></div>
+                <div class="line"><button>注 册</button></div>
+                <p class="textRight">已有账号？<a href="javascript:;" class="colMint">马上登录</a>　</p>
+                <p class="colWarning textCenter"></p>
+            </div>
+            <nav>
+                <div class="menu" id="menu">
+                {%if category == ''%}
+                    <a href="/#menu" class="focus">首页</a>
+                    {%else%}
+                    <a href="/#menu">首页</a>
+                    {%endif%}
+                    {%for cate in categories%}
+                    {%if category == cate.id%}
+                    <a href="/?category={{cate.id}}#menu" class="focus">{{cate.name}}</a>
+                    {%else%}
+                    <a href="/?category={{cate.id}}#menu">{{cate.name}}</a>
+                    {%endif%}
+                    {%endfor%}
+                </div>
+            </nav>
+            <main class="clear">
+                <div class="mainLeft">
+                    <div class="theme">Echo's blog</div>
+                    <div class="about">
+                        <img class="author-image" src="../../public/images/head1.jpg">
+                        <div class="author-name">Echo</div>
+                        <div class="count">
+                            <div class="item">
+                                <div class="item-number">{{count}}</div>
+                                <div class="item-name">文章</div>
+                            </div>
+                            <div class="item">
+                                <div class="item-number">{{categories.length}}</div>
+                                <div class="item-name">分类</div>
+                            </div>
+                            <div class="item" style="border-right: none;">
+                                <div class="item-number">{{viewsSum}}</div>
+                                <div class="item-name">浏览</div>
+                            </div>
+                        </div>
+                        <div class="links">
+                            <span class="linkGit">
+                                <a href="https://github.com/echo645" title="Gihub → https://github.com/echo645" target="_blank">
+                                    <img class="imgGit" src="../../public/images/github.svg">
+                                    <span class='imgName'>Github</span>
+                                </a>
+                            </span>
+                            <span class="linkJiansu">
+                                <a href="https://www.jianshu.com/u/090abcfa9afe" title="简书 → https://www.jianshu.com/u/090abcfa9afe" target="_blank">
+                                    <img class="imgGit" src="../../public/images/book.svg">
+                                    <span class='imgName'>简书</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>                   
+                <div class="mainRight">
+                    {%block content%}{%endblock%}
+                </div>
+            </main>
+        </div>
+    </section> 
+    <section class='sty-night-footer'><div class="copyleft textCenter"><span>© 2019 <img src="../../public/images/girl.svg" class="imgFooter"/> Echo | <img src="../../public/images/people.svg" class="imgFooter"/> {{usersNumber}} | <img src="../../public/images/eye.svg" class="imgFooter"/> {{viewsSum}}</span> </div></section>
+</div>
+</body>
+</html>

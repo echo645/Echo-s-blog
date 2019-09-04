@@ -1,0 +1,47 @@
+{%extends 'layout.html'%}
+
+{%block content%}
+    {%for content in contents%}
+    <div class="listBox">
+        <h1 class="colDefault-title">{{content.title}}</h1>
+        <p class="colDefaultOne" >
+            发表于：<span class="colInfo">{{content.addTime|date('Y年m月d日', -8*60)}}</span> | 
+            分类于：<span class="colInfo">{{content.category.name}}</span>
+        </p>
+        <p class="colDefaultTwo">
+            浏览数：<span class="colInfo">{{content.views}}</span> | 
+            评论数：<span class="colInfo">{{content.comments.length}}</span>
+        </p>
+        {%if content.content.length > 230%}
+        <dfn><p>{{content.content.slice(0,230) + '...'}}</p></dfn>
+        {%else%}
+        <dfn><p>{{content.content.slice(0,230)}}</p></dfn>
+        {%endif%}
+        <div class="post-button text-center"><a class="btn" style="font-weight:bold" href="/view?contentid={{content.id}}#menu">阅读全文 >></a></div>
+        <footer class="post-footer"><div class="post-eof"></div></footer>
+    </div>
+    {%endfor%}
+    <div class="pager" id="pager">
+        <ul class="clear">
+            <li class="previous">
+                {%if page <= 1%}
+                <span><img class="imgTurnLeft" src="../../public/images/noLeft.svg"></span>
+                {%else%}
+                <a href="/?category={{category}}&page={{page-1}}#pager"><img class="imgTurnLeft" src="../../public/images/turnLeft.svg"></a>
+                {%endif%}
+            </li>
+            {%if pages > 0%}
+            <li>
+                <strong>{{page}} / {{pages}}</strong>
+            </li>
+            {%endif%}
+            <li class="next">
+                {%if page >= pages%}
+                <span><img class="imgTurnLeft" src="../../public/images/noRight.svg"></span>
+                {%else%}
+                <a href="/?category={{category}}&page={{page+1}}#pager"><img class="imgTurnLeft" src="../../public/images/turnRight.svg"></a>
+                {%endif%}
+            </li>
+        </ul>
+    </div>
+{%endblock%}
